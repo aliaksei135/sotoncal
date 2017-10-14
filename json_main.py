@@ -11,7 +11,8 @@ EVENTS_ENDPOINT = 'https://my.southampton.ac.uk/campusm/sso/calendar/course_time
 
 AUTH_PAYLOAD = {'username': secrets.USERNAME, 'password': secrets.PASSWORD}
 
-ICAL_SAVE_PATH = 'D:\\Aliaksei\\OneDrive\\Documents'
+# Fill in desired .ics file save path, use \\ as directory separator
+ICAL_SAVE_PATH = ''
 
 def get_cal_json():
     with requests.Session() as s:
