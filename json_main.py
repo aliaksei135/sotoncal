@@ -1,9 +1,6 @@
-import json
+import os
 from datetime import datetime
 
-import re
-
-import os
 import requests
 from icalendar import Calendar, Event
 
@@ -36,6 +33,8 @@ def get_cal_json():
         cal_resp = s.get(cal_url)
         return cal_resp.json()
 
+
+# Probably not possible to implement as both require redirect uris
 def auth_outlook_cal():
     pass
 
