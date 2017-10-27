@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+import re
 import requests
 from icalendar import Calendar, Event
 
@@ -60,7 +61,7 @@ def json_to_ical(cal_json):
         end = datetime.strptime(event['end'].replace(':', '') , '%Y-%m-%dT%H%M%S.%f%z')
         now = datetime.now()
         # Add properties to event
-        e.add('summary', event['desc2'])
+        e.add('summary', event['desc2'] + classify_event(event['desc2']))
         e.add('dtstart', start)
         e.add('dtend', end)
         e.add('dtstamp', now)
@@ -76,8 +77,20 @@ def json_to_ical(cal_json):
     path = os.path.join(ICAL_SAVE_PATH, 'course.ics')
     f = open(path, 'wb')
     f.write(ical.to_ical())
+    print('Completed\nEvents: ' + len(events).__str__())
     f.close()
 
+
+def classify_event(code):
+    # Try to match event code to each event types respective regex
+    if re.search('(?<=\s)L\d\w?(?=\s)', code) is not None:
+        return ' Lecture'
+    elif re.search('(?<=\s)C\d\w?(?=\s)', code) is not None:
+        return ' Computing Lab'
+    elif re.search('(?<=\s)T\d?\w?(?=\s)', code) is not None:
+        return ' Tutorial'
+    else:
+        return ''
 
 def main():
     json_to_ical(get_cal_json())
@@ -86,3 +99,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
