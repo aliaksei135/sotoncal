@@ -61,7 +61,7 @@ def json_to_ical(cal_json):
         end = datetime.strptime(event['end'].replace(':', '') , '%Y-%m-%dT%H%M%S.%f%z')
         now = datetime.now()
         # Add properties to event
-        e.add('summary', event['desc2'] + classify_event(event['desc2']))
+        e.add('summary', event['desc2'] + classify_event(event['desc1']))
         e.add('dtstart', start)
         e.add('dtend', end)
         e.add('dtstamp', now)
